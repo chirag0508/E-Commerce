@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Products</h2>
+
+<form method="GET" style="margin-bottom:20px; display:flex; gap:10px;">
+
+<input type="text" name="search" placeholder="Search product" value="{{request.GET.search}}">
+
+{% if request.GET.category %}
+<input type="hidden" name="category" value="{{request.GET.category}}">
+{% endif %}
+
+<button class="btn">Search</button>
+
+</form>
+
+
+<div class="category-bar">
+
+<a href="{% url 'home' %}" class="cat-btn">All</a>
+
+{% for cat in categories %}
+<a href="{% url 'home' %}?category={{cat.slug}}" class="cat-btn">
+{{cat.name}}
+</a>
+{% endfor %}
+
+</div>
+
+
+{% if products %}
+
+<div class="prd-list">
+
+{% for product in products %}
+
+<div class="prd-card">
+
+<a href="{% url 'product_detail' product.slug %}">
+
+<div class="img-box">
+
+{% if product.image %}
+<img src="{{product.image.url}}">
+{% else %}
+<img src="https://via.placeholder.com/180">
+{% endif %}
+
+</div>
+
+<h3>{{product.name}}</h3>
+
+</a>
+
+<p>₹{{product.price}}</p>
+
+<a href="/cart/add/{{product.slug}}/">
+<button class="btn">Add to Cart</button>
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="no-products">
+🔍 No products found
+</div>
+
+{% endif %}
+
+
+<style>
+
+.no-products{
+text-align:center;
+font-size:26px;
+font-weight:600;
+margin-top:100px;
+color:#333;
+}
+
+.category-bar{
+margin:20px 0;
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.cat-btn{
+padding:8px 16px;
+background:#f1f1f1;
+border-radius:20px;
+text-decoration:none;
+color:#333;
+font-weight:500;
+transition:0.3s;
+}
+
+.cat-btn:hover{
+background:#ff9900;
+color:white;
+}
+
+.prd-list{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:25px;
+margin-top:20px;
+}
+
+.prd-card{
+background:#fff;
+padding:15px;
+border-radius:8px;
+text-align:center;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+transition:0.3s;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
+
+.prd-card:hover{
+transform:scale(1.05);
+}
+
+.img-box{
+height:180px;
+display:flex;
+align-items:center;
+justify-content:center;
+margin-bottom:10px;
+}
+
+.img-box img{
+max-height:170px;
+max-width:100%;
+object-fit:contain;
+}
+
+.btn{
+background:#ff9900;
+border:none;
+padding:8px 15px;
+border-radius:5px;
+cursor:pointer;
+margin-top:10px;
+}
+
+</style>
+
+{% endblock %}

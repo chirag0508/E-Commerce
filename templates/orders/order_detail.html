@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Order #{{ order.id }}</h2>
+
+<p><strong>Total:</strong> ₹{{ order.total }}</p>
+
+<p><strong>Payment Status:</strong>
+{% if order.paid %}
+<span style="color:green; font-weight:bold;">Paid</span>
+{% else %}
+<span style="color:red; font-weight:bold;">Pending</span>
+{% endif %}
+</p>
+
+<p><strong>Order Status:</strong>
+
+{% if order.status == "Pending" %}
+<span style="color:orange;">Pending</span>
+
+{% elif order.status == "Confirmed" %}
+<span style="color:blue;">Confirmed</span>
+
+{% elif order.status == "Shipped" %}
+<span style="color:purple;">Shipped</span>
+
+{% elif order.status == "Delivered" %}
+<span style="color:green;">Delivered</span>
+
+{% elif order.status == "Cancelled" %}
+<span style="color:red;">Cancelled</span>
+
+{% endif %}
+
+</p>
+
+<p><strong>Date:</strong> {{ order.created_at }}</p>
+
+<hr>
+
+<!-- ⭐ Order Tracking Timeline -->
+<h3>Order Tracking</h3>
+
+<div style="display:flex; justify-content:space-between; margin:30px 0;">
+
+<div style="text-align:center;">
+<div style="font-size:24px;">
+{% if order.status == "Pending" or order.status == "Confirmed" or order.status == "Shipped" or order.status == "Delivered" %}
+✔
+{% else %}
+⬜
+{% endif %}
+</div>
+<p>Order Placed</p>
+</div>
+
+<div style="text-align:center;">
+<div style="font-size:24px;">
+{% if order.status == "Confirmed" or order.status == "Shipped" or order.status == "Delivered" %}
+✔
+{% else %}
+⬜
+{% endif %}
+</div>
+<p>Confirmed</p>
+</div>
+
+<div style="text-align:center;">
+<div style="font-size:24px;">
+{% if order.status == "Shipped" or order.status == "Delivered" %}
+✔
+{% else %}
+⬜
+{% endif %}
+</div>
+<p>Shipped</p>
+</div>
+
+<div style="text-align:center;">
+<div style="font-size:24px;">
+{% if order.status == "Delivered" %}
+✔
+{% else %}
+⬜
+{% endif %}
+</div>
+<p>Delivered</p>
+</div>
+
+</div>
+
+<hr>
+
+<h3>Delivery Address</h3>
+
+<p>
+{{ order.full_name }} <br>
+{{ order.address }} <br>
+{{ order.city }} - {{ order.pincode }}
+</p>
+
+<hr>
+
+<h3>Products in this Order</h3>
+
+<table border="1" cellpadding="10" style="width:100%; border-collapse:collapse;">
+
+<tr style="background:#f2f2f2;">
+<th>Product</th>
+<th>Price</th>
+<th>Quantity</th>
+<th>Total</th>
+</tr>
+
+{% for item in order.items.all %}
+
+<tr>
+<td>{{ item.product.name }}</td>
+
+<td>₹{{ item.price }}</td>
+
+<td>{{ item.quantity }}</td>
+
+<td>₹{{ item.price|floatformat:2 }} × {{ item.quantity }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<h3>Total Amount: ₹{{ order.total }}</h3>
+
+<br>
+
+<!-- Download Invoice Button -->
+<a href="{% url 'download_invoice' order.id %}"
+   style="padding:10px 20px; background:#27ae60; color:white; text-decoration:none; border-radius:5px;">
+   Download Invoice
+</a>
+
+<br><br>
+
+<!-- Back Button -->
+<a href="{% url 'user_orders' %}"
+   style="padding:10px 20px; background:#3498db; color:white; text-decoration:none; border-radius:5px;">
+   ← Back to Orders
+</a>
+
+{% endblock %}

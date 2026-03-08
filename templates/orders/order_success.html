@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div style="text-align:center; padding:40px;">
+
+<h2 style="color:green;">🎉 Order Placed Successfully!</h2>
+
+<p>Thank you for shopping with us.</p>
+
+<p><strong>Order ID:</strong> #{{ order.id }}</p>
+
+<p><strong>Total Paid:</strong> ₹{{ order.total }}</p>
+
+<br>
+
+<a href="{% url 'order_detail' order.id %}"
+   style="padding:10px 20px; background:#3498db; color:white; text-decoration:none; border-radius:5px;">
+   View Order
+</a>
+
+<a href="{% url 'user_orders' %}"
+   style="padding:10px 20px; background:#2ecc71; color:white; text-decoration:none; border-radius:5px; margin-left:10px;">
+   My Orders
+</a>
+
+</div>
+
+{% endblock %}

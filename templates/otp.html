@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Enter OTP</h2>
+
+<form method="post">
+
+{% csrf_token %}
+
+<label>OTP</label>
+
+{{ form.otp }}
+
+<button class="btn">Verify</button>
+
+</form>
+
+{% endblock %}

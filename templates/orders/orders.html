@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>My Orders</h2>
+
+{% if orders %}
+
+<table border="1" cellpadding="10">
+
+<tr>
+<th>Order ID</th>
+<th>Total</th>
+<th>Status</th>
+<th>Date</th>
+<th>Details</th>
+</tr>
+
+{% for order in orders %}
+
+<tr>
+<td>#{{ order.id }}</td>
+<td>₹{{ order.total }}</td>
+<td>
+    {% if order.paid %}
+        Paid
+    {% else %}
+        Pending
+    {% endif %}
+</td>
+<td>{{ order.created_at }}</td>
+
+<td>
+<a href="{% url 'order_detail' order.id %}">
+View Order
+</a>
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% else %}
+
+<p>You have no orders.</p>
+
+{% endif %}
+
+{% endblock %}

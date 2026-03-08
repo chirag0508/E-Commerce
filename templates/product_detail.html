@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="prd-detail">
+
+<h2>{{ product.name }}</h2>
+
+<img src="{{ product.image.url }}" width="250">
+
+<p>{{ product.description }}</p>
+
+<h3>₹{{ product.price }}</h3>
+
+<p>
+⭐ {{ product.average_rating }} / 5
+({{ product.total_reviews }} Reviews)
+</p>
+
+<a href="/cart/add/{{ product.slug }}/">
+<button class="btn">Add to Cart</button>
+</a>
+
+</div>
+
+
+<!-- REVIEWS SECTION -->
+
+<div class="review-box">
+
+<h3>Customer Reviews</h3>
+
+{% for review in product.reviews.all %}
+
+<div class="review">
+
+<div class="review-user">
+<b>{{ review.user }}</b>
+</div>
+
+<div class="review-rating">
+⭐ {{ review.rating }} / 5
+</div>
+
+<p>{{ review.comment }}</p>
+
+<hr>
+
+</div>
+
+{% empty %}
+
+<p>No reviews yet</p>
+
+{% endfor %}
+
+</div>
+
+
+<!-- ADD REVIEW -->
+
+{% if user.is_authenticated %}
+
+<div class="review-box">
+
+<h3>Add Review</h3>
+
+<form method="POST" action="/reviews/add/{{ product.slug }}/">
+
+{% csrf_token %}
+
+<label>Rating</label>
+
+<select name="rating">
+
+<option value="1">1 Star</option>
+<option value="2">2 Stars</option>
+<option value="3">3 Stars</option>
+<option value="4">4 Stars</option>
+<option value="5">5 Stars</option>
+
+</select>
+
+<label>Comment</label>
+
+<textarea name="comment" rows="4"></textarea>
+
+<br><br>
+
+<button class="btn">Submit Review</button>
+
+</form>
+
+</div>
+
+{% endif %}
+
+
+<style>
+
+.review-box{
+background:white;
+padding:20px;
+margin-top:30px;
+border-radius:6px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.review{
+margin-bottom:15px;
+}
+
+.review-user{
+font-weight:bold;
+}
+
+.review-rating{
+color:#ff9900;
+margin-bottom:5px;
+}
+
+textarea{
+width:100%;
+padding:10px;
+}
+
+select{
+padding:8px;
+margin-bottom:10px;
+}
+
+</style>
+
+
+{% endblock %}
