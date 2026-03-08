@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'accounts',
     'products',
     'cart',
@@ -35,6 +36,7 @@ INSTALLED_APPS = [
     'payments',
     'reviews',
     'core',
+
     'cloudinary',
     'cloudinary_storage',
 ]
@@ -131,10 +133,6 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
-# MEDIA (Cloudinary)
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 # CLOUDINARY MEDIA STORAGE
 
 CLOUDINARY_STORAGE = {
@@ -144,6 +142,17 @@ CLOUDINARY_STORAGE = {
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
+# Cloudinary SDK configuration (needed for upload scripts)
+
+cloudinary.config(
+    cloud_name="dfnvqgyn1",
+    api_key="945634964155354",
+    api_secret="5E4F_0Y_X9OiS6qKSNGiNQB4Jf4"
+)
+
+
 # USER MODEL
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -171,3 +180,8 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 RAZORPAY_KEY_ID = "rzp_test_SNygSauhE9vySz"
 RAZORPAY_KEY_SECRET = "plFcNL7bjZa7GToAr9TjqgPp"
+
+
+# DEFAULT AUTO FIELD
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
