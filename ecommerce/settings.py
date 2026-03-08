@@ -5,9 +5,6 @@ Django settings for ecommerce project.
 from pathlib import Path
 import os
 import dj_database_url
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,6 +34,7 @@ INSTALLED_APPS = [
     'reviews',
     'core',
 
+    # Cloudinary
     'cloudinary',
     'cloudinary_storage',
 ]
@@ -81,7 +79,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 
-# DATABASE (works locally + on Render)
+# DATABASE (works locally + Render)
 
 DATABASES = {
     'default': dj_database_url.config(
@@ -133,7 +131,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
-# CLOUDINARY MEDIA STORAGE
+# CLOUDINARY STORAGE (for product images)
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dfnvqgyn1',
@@ -142,15 +140,6 @@ CLOUDINARY_STORAGE = {
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-
-# Cloudinary SDK configuration (needed for upload scripts)
-
-cloudinary.config(
-    cloud_name="dfnvqgyn1",
-    api_key="945634964155354",
-    api_secret="5E4F_0Y_X9OiS6qKSNGiNQB4Jf4"
-)
 
 
 # USER MODEL
@@ -185,6 +174,3 @@ RAZORPAY_KEY_SECRET = "plFcNL7bjZa7GToAr9TjqgPp"
 # DEFAULT AUTO FIELD
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
