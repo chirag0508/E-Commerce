@@ -19,23 +19,24 @@ class Product(models.Model):
 
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
-    image = models.ImageField(upload_to='products/')
+    # FIXED IMAGE FIELD
+    image = models.URLField(blank=True, null=True)
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     available = models.BooleanField(default=True)
 
-    # ⭐ NEW STOCK FIELD
+    # STOCK
     stock = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.name
 
-    # ⭐ Average Rating
+    # Average Rating
     def average_rating(self):
         avg = self.reviews.aggregate(Avg("rating"))["rating__avg"]
         return round(avg, 1) if avg else 0
 
-    # ⭐ Total Reviews
+    # Total Reviews
     def total_reviews(self):
         return self.reviews.count()
