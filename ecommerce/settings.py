@@ -45,8 +45,12 @@ INSTALLED_APPS = [
     'orders',
     'payments',
     'reviews',
-    'core'
+    'core',
+    'cloudinary',
+    'cloudinary_storage',
 ]
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -133,8 +137,7 @@ BASE_DIR / "static"
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / "media"
+
 AUTH_USER_MODEL = 'accounts.User'
 
 FAST2SMS_API_KEY ='s6BOKzM7nH0tJgbTLxwckpjvlZ9FEPAuyDVq4h1ofXYWUd23a8Dp3XixIdWK5gR9vwjACZYLlbsEzHe4'
