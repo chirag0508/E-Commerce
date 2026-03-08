@@ -43,7 +43,7 @@
 <div class="img-box">
 
 {% if product.image %}
-<img src="{{product.image}}">
+<img src="{{ product.image.url }}">
 {% else %}
 <img src="https://via.placeholder.com/180">
 {% endif %}
