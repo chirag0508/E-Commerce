@@ -80,6 +80,12 @@ TEMPLATES = [
     },
 ]
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dfnvqgyn1',
+    'API_KEY': 'your_api_key',
+    'API_SECRET': 'your_api_secret',
+}
+
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 
@@ -156,3 +162,4 @@ RAZORPAY_KEY_ID = "rzp_test_SNygSauhE9vySz"
 RAZORPAY_KEY_SECRET = "plFcNL7bjZa7GToAr9TjqgPp"
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
