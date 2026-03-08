@@ -5,6 +5,9 @@ Django settings for ecommerce project.
 from pathlib import Path
 import os
 import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +28,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'accounts',
     'products',
     'cart',
@@ -33,7 +35,6 @@ INSTALLED_APPS = [
     'payments',
     'reviews',
     'core',
-
     'cloudinary',
     'cloudinary_storage',
 ]
@@ -140,6 +141,7 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': '5E4F_0Y_X9OiS6qKSNGiNQB4Jf4',
 }
 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # USER MODEL
 
