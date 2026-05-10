@@ -131,7 +131,7 @@ AUTH_USER_MODEL = 'accounts.User'
 # ─── EMAIL (Gmail SMTP) ──────────────────────────────────────────────────────────
 # Set EMAIL_HOST_USER and EMAIL_HOST_PASSWORD as environment variables on Render.
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp-relay.brevo.com')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
