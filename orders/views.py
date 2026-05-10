@@ -11,7 +11,6 @@ from cart.models import CartItem
 from .models import Order, OrderItem
 
 
-# Checkout Page
 @login_required
 def checkout(request):
 
@@ -28,7 +27,6 @@ def checkout(request):
         city = request.POST.get("city")
         pincode = request.POST.get("pincode")
 
-        # Create Order
         order = Order.objects.create(
             user=request.user,
             full_name=full_name,
@@ -38,7 +36,6 @@ def checkout(request):
             total=total
         )
 
-        # Create Order Items
         for item in cart_items:
             OrderItem.objects.create(
                 order=order,
@@ -47,7 +44,6 @@ def checkout(request):
                 price=item.product.price
             )
 
-        # Clear Cart
         cart_items.delete()
 
         messages.success(request, "Order created. Please complete payment.")

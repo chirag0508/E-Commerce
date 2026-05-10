@@ -2,20 +2,31 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container" style="max-width:400px; margin:80px auto;">
 
-<h2>Enter OTP</h2>
+  <h2>Enter OTP</h2>
+  <p>We've sent a 6-digit OTP to your email address. Please enter it below.</p>
 
-<form method="POST">
+  {% if error %}
+    <div style="padding:10px; background:#f8d7da; border-radius:4px; margin-bottom:15px;">
+      {{ error }}
+    </div>
+  {% endif %}
 
-{% csrf_token %}
+  <form method="POST">
+    {% csrf_token %}
+    <label>OTP</label><br>
+    <input type="text" name="otp" maxlength="6" required
+           style="width:100%; padding:10px; margin:8px 0 16px; border:1px solid #ccc; border-radius:4px; letter-spacing:4px; font-size:18px;">
+    <button type="submit"
+            style="width:100%; padding:12px; background:#ff9900; border:none; font-weight:bold; border-radius:4px; cursor:pointer;">
+      Verify OTP
+    </button>
+  </form>
 
-<label>OTP</label>
-<input type="text" name="otp" required>
-
-<button type="submit">Verify OTP</button>
-
-</form>
+  <p style="margin-top:16px; text-align:center;">
+    <a href="{% url 'forgot_password' %}">Resend OTP</a>
+  </p>
 
 </div>
 

@@ -2,20 +2,39 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container" style="max-width:400px; margin:80px auto;">
 
-<h2>Forgot Password</h2>
+  <h2>Forgot Password</h2>
+  <p>Enter your registered email address and we'll send you an OTP to reset your password.</p>
 
-<form method="POST">
+  {% if messages %}
+    {% for msg in messages %}
+      <div class="alert" style="padding:10px; background:#d4edda; border-radius:4px; margin-bottom:15px;">
+        {{ msg }}
+      </div>
+    {% endfor %}
+  {% endif %}
 
-{% csrf_token %}
+  {% if error %}
+    <div class="alert" style="padding:10px; background:#f8d7da; border-radius:4px; margin-bottom:15px;">
+      {{ error }}
+    </div>
+  {% endif %}
 
-<label>Email</label>
-<input type="email" name="email" required>
+  <form method="POST">
+    {% csrf_token %}
+    <label>Email Address</label><br>
+    <input type="email" name="email" required
+           style="width:100%; padding:10px; margin:8px 0 16px; border:1px solid #ccc; border-radius:4px;">
+    <button type="submit"
+            style="width:100%; padding:12px; background:#ff9900; border:none; font-weight:bold; border-radius:4px; cursor:pointer;">
+      Send OTP
+    </button>
+  </form>
 
-<button type="submit">Send OTP</button>
-
-</form>
+  <p style="margin-top:16px; text-align:center;">
+    <a href="{% url 'login' %}">Back to Login</a>
+  </p>
 
 </div>
 

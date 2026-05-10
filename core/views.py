@@ -11,14 +11,12 @@ def home(request):
     search = request.GET.get("search")
     category = request.GET.get("category")
 
-    # SEARCH
     if search:
         products = products.filter(
             Q(name__icontains=search) |
             Q(category__name__icontains=search)
         )
 
-    # CATEGORY FILTER
     if category:
         products = products.filter(category__slug=category)
 
