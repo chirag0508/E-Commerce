@@ -1,5 +1,7 @@
 """
 Django settings for ecommerce project.
+SIMPLIFIED VERSION - LOCAL DEVELOPMENT ONLY
+Cloudinary completely removed for now
 """
 
 from pathlib import Path
@@ -9,10 +11,10 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ─── SECURITY ───────────────────────────────────────────────────────────────────
-# In production, set SECRET_KEY as an environment variable on Render.
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-kvl!fshzvxst(rh3atcx)fblsj49a1vo3ulkelv!krj0faqy(s')
 
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+# ✅ DEBUG ENABLED FOR DEVELOPMENT
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -25,10 +27,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # Cloudinary for persistent media storage on Render
-    'cloudinary',
-    'cloudinary_storage',
 
     'accounts',
     'products',
@@ -107,21 +105,15 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
-# ─── MEDIA FILES (Cloudinary) ────────────────────────────────────────────────────
-# Cloudinary stores product images permanently — unlike Render's ephemeral disk.
-# Set these three environment variables on Render's dashboard:
-#   CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', ''),
-    'API_KEY':    os.environ.get('CLOUDINARY_API_KEY', ''),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', ''),
-}
+# ─── MEDIA FILES (LOCAL FILESYSTEM ONLY) ────────────────────────────────────────
+# ✅ SIMPLE APPROACH: Use local /media/ folder for all images
+# No Cloudinary, no complications - just local storage
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-# MEDIA_URL is still used in templates when running locally.
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Use default Django file storage (local filesystem)
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 
 # ─── USER MODEL ──────────────────────────────────────────────────────────────────
@@ -129,7 +121,6 @@ AUTH_USER_MODEL = 'accounts.User'
 
 
 # ─── EMAIL (Gmail SMTP) ──────────────────────────────────────────────────────────
-# Set EMAIL_HOST_USER and EMAIL_HOST_PASSWORD as environment variables on Render.
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp-relay.brevo.com')
 EMAIL_PORT = 465
